@@ -79,3 +79,32 @@ body {
 .navlogout:hover {
   background-color: #3373b0;
 }
+
+
+.content{
+  padding:20px;
+  margin-top:30px;  
+}
+
+/* MAIN PAGE */
+.container.home .title {
+  text-align: center;
+}
+.container.home .datetime {
+  text-align: center;
+  font-family: lcdmono2;
+} 
+
+/* PAYMENT PAGE */
+.container.payment{
+  text-align: center;
+}
+.container.payment .validation{
+  width: 100%;
+}
+.container.payment .validation, tr, th, td{
+  padding: 8px;
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
