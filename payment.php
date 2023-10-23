@@ -2,8 +2,8 @@
 session_start();
 $username = $_SESSION['username'];
 
+//login validation
 if (!isset($_SESSION['username'])) {
-    // Redirect to the login page if not login 
     header("Location: login.php");
     exit();
 }
@@ -45,37 +45,115 @@ if (!isset($_SESSION['username'])) {
                         <td>Smith</td>
                         <td>50</td>
                         <td>2023-2-20 18:10:35</td>
-                        <td><button class='viewButton' onclick="showPopup('Jill Smith')">Validate</button></td>
+                        <td><button onclick="openMainPopup('Jill Smith')">Validate</button></td>
                     </tr>
                     <tr>
                         <td>Eve</td>
                         <td>Jackson</td>
                         <td>50</td>
                         <td>2021-10-02 07:23:35</td>
-                        <td><button class='viewButton' onclick="showPopup('Eve Jackson')">Validate</button></td>
+                        <td><button onclick="openMainPopup('Eve Jackson')">Validate</button></td>
                     </tr>
                     <tr>
                         <td>John</td>
                         <td>Doe</td>
                         <td>50</td>
                         <td>2023-05-02 08:24:35</td>
-                        <td><button class='viewButton' onclick="showPopup('John Doe')">Validate</button></td>
+                        <td><button onclick="openMainPopup('John Doe')">Validate</button></td>
                     </tr>
                 </tbody>
             </table>
 
-            <div class="popup" id="popup">
-           
-                <p id="popupContent"></p>
-                
-                <hr>
-                //TODO another modal for changing doctors and there will be a audit trail to know who's user change the doctor
-                <p> Change Doctor: </p> 
-                <button class="closeButton" onclick="hidePopup()">Close</button>
+            <div id="mainPopup" class="overlay">
+                <div class="popup">
+                    <div class="popup-header">
+                        <h2 class="title">Payment</h2>
+                        <button class="closePopup" onclick="closeMainPopup()">&times;</button>
+                    </div>
+                    <div class="popup-body">
+                        <p id="popupContent"></p>
+                        <form>
+                            <input type="radio" id="Yes" name="validate" value="Yes">
+                            <label for="Yes">Yes</label><br>
+                            <input type="radio" id="No" name="validate" value="No">
+                            <label for="No">No</label><br>
+                            <br>
+                            <input type="submit" value="Submit">
+                        </form>
+
+                        <hr>
+                        <button onclick="openChangeDocPopup()">Change Doctor</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="nestedPopup" class="overlay">
+                <div class="popup">
+                    <div class="popup-header">
+                        <h2 class="title">Search for Doctor</h2>
+                        <button class="closePopup" onclick="closeChangeDocPopup()">&times;</button>
+                    </div>
+                    <div class="popup-body">
+                        <table class="doctorslist">
+                            <tr>
+                                <th>Select</th>
+                                <th>Fullname</th>
+                                <th>Department</th>
+                            </tr>
+                            <tbody>
+                                <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td>Chasey Elizarde</td>
+                                    <td>Neurologist </td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td>Chasey Elizarde</td>
+                                    <td>Neurologist </td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td>Chasey Elizarde</td>
+                                    <td>Neurologist </td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td>Chasey Elizarde</td>
+                                    <td>Neurologist </td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td>Chasey Elizarde</td>
+                                    <td>Neurologist </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
     <script>
+        function openMainPopup(content) {
+            var popup = document.getElementById('mainPopup');
+            var popupContent = document.getElementById('popupContent');
+            popupContent.innerHTML = 'Doctors Name: ' + content;
+            popup.style.display = 'block';
+        }
+
+        function closeMainPopup() {
+            document.getElementById("mainPopup").style.display = "none";
+        }
+
+        function openChangeDocPopup() {
+            document.getElementById("nestedPopup").style.display = "block";
+        }
+
+        function closeChangeDocPopup() {
+            document.getElementById("nestedPopup").style.display = "none";
+        }
+
         //function for sorting date 
         function sortTableByDate(tableId) {
             var table = document.getElementById(tableId);
@@ -104,19 +182,6 @@ if (!isset($_SESSION['username'])) {
             }
         }
 
-        //function for pop up 
-        function showPopup(content) {
-            var popup = document.getElementById('popup');
-            var popupContent = document.getElementById('popupContent');
-            popupContent.innerHTML = 'Popup content for: ' + content;
-            popup.style.display = 'block';
-        }
-
-        //function for hide pop up
-        function hidePopup() {
-            var popup = document.getElementById('popup');
-            popup.style.display = 'none';
-        }
     </script>
 </body>
 
